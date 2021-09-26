@@ -1,16 +1,20 @@
 package sac;
 
-public class Objet {
+import java.util.Comparator;
+
+public class Objet{
     private String nom;
     private float poids;
     private float prix;
     private boolean dansSac;
+    private float ratio;
 
     public Objet(String nom, float poids, float prix) {
         this.nom = nom;
         this.poids = poids;
         this.prix = prix;
         this.dansSac = false;
+        this.ratio = prix/poids;
     }
 
     public String getNom() {
@@ -45,7 +49,24 @@ public class Objet {
         this.dansSac = dansSac;
     }
 
-    public String toString(){
-        return "";
+    public float getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(float ratio) {
+        this.ratio = ratio;
+    }
+
+    @Override
+    public String toString() {
+        return "Objet{" +
+                "nom='" + nom + '\'' +
+                ", poids=" + poids +
+                ", prix=" + prix +
+                '}';
+    }
+
+    public static Comparator<Objet> compareTo(){
+        return (o1,o2) -> Float.compare(o2.getRatio(),o1.getRatio());
     }
 }

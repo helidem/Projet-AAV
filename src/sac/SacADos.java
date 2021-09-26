@@ -6,15 +6,19 @@ import java.util.Scanner;
 
 public class SacADos {
     private final float poidsmax;
-    private ArrayList<Objet> objets = new ArrayList<>();
-    private ArrayList<Objet> objetsPossibles = new ArrayList<>();
+    private float poidsActuel;
+    private ArrayList<Objet> objetsDansSac= new ArrayList<>();//objets dans le sac a dos
+    private ArrayList<Objet> objetsPossibles= new ArrayList<>(); //tous les objets possibles dans la liste
 
     public SacADos(){
-        poidsmax = 30;
+        this.poidsmax = 0;
+        this.poidsActuel=0;
     }
 
     public SacADos(String chemin, float poidsmax){
         this.poidsmax = poidsmax;
+        this.objetsDansSac = new ArrayList<>();
+        this.objetsPossibles = new ArrayList<>();
 
         try {
             Scanner s = new Scanner(new File(chemin));
@@ -33,4 +37,16 @@ public class SacADos {
             e.printStackTrace();
         }
     }
+
+    public void resoudre(){
+
+    }
+
+    public void viderSac(){
+        this.poidsActuel = 0;
+        this.objetsDansSac.clear();
+    }
+
+
+
 }
