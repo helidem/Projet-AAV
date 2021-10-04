@@ -9,9 +9,9 @@ public class Gloutonne extends Algorithme{
 
     public Gloutonne(SacADos sac){
         super(sac);
-
     }
 
+    @Override
     public void resoudre(){
         ArrayList<Objet> trié = new ArrayList<Objet>(objets);
         triRapideRec(trié, 0,trié.size() -1);
