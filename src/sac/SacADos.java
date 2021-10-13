@@ -97,7 +97,7 @@ public class SacADos implements Iterable<Objet>{ //iterable pour etre utilisé d
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Sac à dos").append("\n").append("Valeur : ").append(this.getPrixTotal()).append("\n").
+        sb.append("Sac à dos").append("\n").append("Prix total des objets : ").append(this.getPrixTotal()).append("$\n").
                 append("Poids : ").append(this.getPoidsActuel()).append("\n").append("Poids max : ").
                 append(this.getPoidsmax()).append("\n").append("Objets dans ce sac : ").append("\n");
         for(Objet o: this.objetsDansSac)
