@@ -79,9 +79,8 @@ public class SacADos implements Iterable<Objet>{ //iterable pour etre utilisé d
         this.objetsPossibles = objetsPossibles;
     }
 
-    public void resoudre() {
-        Algorithme algo = new PSE(this);
-        algo.resoudre();
+    public void resoudre(Algorithme algo) {
+         algo.resoudre();
     }
 
     public void viderSac() {
