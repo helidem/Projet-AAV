@@ -3,7 +3,7 @@ package algos;
 import sac.Objet;
 import sac.SacADos;
 
-public class PSE extends Gloutonne{
+public class PSE extends Gloutonne {
 
     // solution possible
     private float borneMin;
@@ -12,70 +12,110 @@ public class PSE extends Gloutonne{
 
     private float poidsMax;
 
-    public PSE(SacADos sac){
+    public PSE(SacADos sac) {
         super(sac);
     }
 
-    public void resoudre(){
+    public void resoudre() {
         float borneSup = borneMin = 0;
 
-        for(Objet o : super.objets){
+        for (Objet o: super.objets) {
             borneSup += o.getPrix();
         }
 
         super.resoudre();
-        for(Objet o : sac)
+        for (Objet o: sac)
             this.borneMin += o.getPrix();
 
-    }
+        // Si la methode gloutonne a réussi a trouver la solution, on ne fait pas la methode pse
+        if (borneSup != sac.getPrixTotal()) {
 
+            // On crée la racine de l'ABR
+            ABR root = new ABR();
+
+            // Initialisation
+            this.meilleurSol = root;
+
+            // resolution recursive
+            resoudreRec(0, root, borneSup);
+
+            // maintenant on vide le sac car il contient les objets issus de la methode gloutonne
+            sac.viderSac();
+
+            // on mets les objets dans le sac a partir du noeud contenant la meilleure combinaison d'objets
+            ajoutRec(this.meilleurSol);
+
+            // pistes d'améliorations : stocker une arraylist d'objets dans chaque noeud pour eviter d'utiliser la methode ajoutRec
+            // ajouter une classe noeud pour faciliter la manipulation du ABR
+        }
+    }
 
     /**
-     * Résous la méthode pse recursivement
-     * @param indexObj l'index de l'objet à inserer depuis la liste des objets du .txt
-     * @param borneMin la borne minimal correspondante à la solution gloutonne
-     * @return le prix total du sac
+     * Resous recursivement le probleme
+     * @param indexObj
+     * @param borneSup
      */
-    public float resoudreRec(int indexObj, float borneMin){
-        // init
-        sac.viderSac();
-        float min = sac.getPrixTotal();
+    public void resoudreRec(int indexObj, ABR node, float borneSup) {
+        // Ajout de l'objet suivant de la liste dans le fils gauche
+        node.setFilsGauche(objets.get(indexObj), indexObj);
 
-        // ajouter un objet dans le sac
-        sac.add(objets.get(indexObj));
-        min = min + objets.get(indexObj).getPrix();
+        // Ajout du fils droit sans l'ajout de l'objet
+        node.setFilsDroit();
 
-        // tester si le prix total est plus élevé que la borneMin qui correspond à une solution via la methode gloutonne
-        if(min > borneMin){
-            borneMin = min;
+    // On regadre si on a trouvé une meilleure solution lors de la creation du fils gauche
+    if (node.getFilsGauche().getPrix() >= this.borneMin
+        && node.getFilsGauche().getPoids() <= sac.getPoidsmax() /* pas obligatoire */) {
+
+            // On indique de quel noeud il s'agit
+            this.meilleurSol = node.getFilsGauche();
+
+            // Ensuite on update la borne min car il peut etre une solution possible
+            this.borneMin = this.meilleurSol.getPrix();
         }
 
-        // voir s'il reste des objets à mettre dans le fils droit
-        if(indexObj < objets.size()){
-            // re appeler cette methode avec un index + 1
-            float filsDroit = resoudreRec(indexObj+1,borneMin);
-            // si le fils droit a une solution meilleure :
-            if(filsDroit > borneMin){
-                borneMin = filsDroit;
+    // On regarde s'il reste encore des objets a mettre dans le sac
+    // et que le poids max n'est pas dépassé : dans ce cas on "coupe" l'arbre
+    if (indexObj < objets.size() - 1 && node.getPoids() < sac.getPoidsmax()) {
+            // On rappelle la fonction recursive avec l'objet suivant
+            resoudreRec(indexObj + 1, node.getFilsGauche(), borneSup);
+
+      /*
+      si à partir d’un nœud, nous savons que nous ne pourrons pas faire plus de 10 (borne supérieure calculée)
+      et que la borne inférieure existante est à 11 (on a déjà une solution de valeur 11), alors les solutions
+      descendantes de ce nœud ne sont pas intéressantes.
+      */
+
+      /*
+       La somme de toutes les
+       valeurs de tous les objets déjà mis dans le sac plus la somme des valeurs des objets
+       restants dont on ne sait
+       pas encore s’ils seront dans le sac.
+      */
+        // on a décidé de faire une soustraction
+        float test = borneSup - objets.get(indexObj).getPrix();
+
+            if (test >= borneMin) {
+                // une solution est alors possible
+                // on appelle cette methode recursivement
+                resoudreRec(indexObj + 1, node.getFilsDroit(), test);
             }
+            // sinon on coupe
+            // et on n'a pas besoin de continuer car "les solutions descendantes de ce nœud ne sont pas intéressantes."
         }
-
-        // retirer l'objet du sac
-        sac.remove(objets.get(indexObj));
-
-        // voir s'il reste des objets à mettre dans le fils gauche
-        if(indexObj < objets.size()){
-            // re appeler cette methode avec un index + 1
-            float filsGauche = resoudreRec(indexObj+1,borneMin);
-            // si le fils gauche a une solution meilleure :
-            if(filsGauche > borneMin){
-                borneMin = filsGauche;
-            }
-        }
-
-        // retourner la borne min
-        return borneMin;
-
     }
 
+    private void ajoutRec(ABR meilleurSol){
+        int indiceObj;
+
+        // Tester si l'indice ne vaut pas -1
+        if(meilleurSol.getIndiceObjet() != -1){
+            sac.add(objets.get(meilleurSol.getIndiceObjet()));
+        }
+
+        // ensuite on continue jusqu'a la racine
+        if(!meilleurSol.isRoot()){
+            ajoutRec(meilleurSol.getParent());
+        }
+
+    }
 }

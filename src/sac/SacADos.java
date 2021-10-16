@@ -3,6 +3,7 @@ package sac;
 import algos.Algorithme;
 import algos.Dynamique;
 import algos.Gloutonne;
+import algos.PSE;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class SacADos implements Iterable<Objet>{ //iterable pour etre utilisé d
     }
 
     public void resoudre() {
-        Algorithme algo = new Dynamique(this);
+        Algorithme algo = new PSE(this);
         algo.resoudre();
     }
 
