@@ -95,6 +95,11 @@ public class SacADos implements Iterable<Objet>{ //iterable pour etre utilisé d
         }
     }
 
+    public void remove(Objet o){
+        this.objetsDansSac.remove(o);
+        this.poidsActuel -= o.getPoids();
+    }
+
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Sac à dos").append("\n").append("Prix total des objets : ").append(this.getPrixTotal()).append("$\n").
