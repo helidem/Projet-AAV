@@ -10,12 +10,12 @@ public class Dynamique extends Algorithme{
     public void resoudre() {
         // créer une matrice de valeurs de taille nombre d'objets * le poids max du sac
         int nbObjets = objets.size();
-        int poidsMax = Math.round(sac.getPoidsmax());
-        float[][] M = new float[nbObjets][poidsMax+1];
+        int castedPoidsMax = (int) sac.getPoidsmax()*10;
+        float[][] M = new float[nbObjets][castedPoidsMax+1];
 
         // remplir la premiere ligne
-        for(int j = 0;j<= poidsMax;j++){
-            if(objets.get(0).getPoids() > j){
+        for(int j = 0;j<= castedPoidsMax;j++){
+            if((objets.get(0).getPoids()*10) > j){
                 M[0][j] = 0;
             }else{
                 M[0][j] = objets.get(0).getPrix();
@@ -24,22 +24,22 @@ public class Dynamique extends Algorithme{
 
         // remplir les autres lignes
         for(int i = 1;i< nbObjets;i++){
-            for(int j =0;j<= poidsMax;j++){
-                if(objets.get(i).getPoids()>j){
+            for(int j =0;j<= castedPoidsMax;j++){
+                if((objets.get(i).getPoids()*10)>j){
                     M[i][j] = M[i-1][j];
                 }else{
                     //M[i][j] = maximum ( M[i-1][j], M[i-1][j-poidsObjet[i]] + valeurObjet[i] )
-                    M[i][j] = Math.max(M[i-1][j],M[i-1][Math.round(j-objets.get(i).getPoids())]+objets.get(i).getPrix());
+                    M[i][j] =  Math.max(M[i-1][j],(M[i-1][(int) ((j-objets.get(i).getPoids()*10))]+objets.get(i).getPrix()));
                 }
             }
         }
 
         // recuperer les objets
 
-        // Chaque case du tableau représente le bénéfice maximumpossible pour les i premiers objets avec un poids j.
+        // Chaque case du tableau représente le bénéfice maximum possible pour les i premiers objets avec un poids j.
 
-        int i = nbObjets-1; // -1 car sinon "outOfBounds"
-        int j = poidsMax;
+        int i = nbObjets-1; // -1 sinon "outOfBounds"
+        int j = castedPoidsMax;
 
         /*
         TANT QUE M[i][j] EGALE M[i][j-1]
@@ -60,21 +60,13 @@ public class Dynamique extends Algorithme{
          */
 
         while(j>0){
-            while((i > 0) && (M[i - 1][j] == M[i][j])){
+            while((i > 0) && (M[i ][j] == M[i-1][j])){
                 i--;
             }
-            j = j - Math.round(objets.get(i).getPoids());
+            j = j - (int)(objets.get(i).getPoids()*10);
             if(j>=0)
                 sac.add(objets.get(i));
             i--;
         }
-
-
-
-
-
-
-
-
     }
 }

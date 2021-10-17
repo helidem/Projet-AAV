@@ -12,6 +12,7 @@ public class Application {
   public static void main(String[] args) {
 
     SacADos s = new SacADos(args[0], Integer.parseInt(args[1]));
+    //SacADos s = new SacADos("out/artifacts/resoudre_sac_a_dos/giga liste.txt", 12);
     long begin = System.nanoTime();
     try {
       switch (args[2]) {
@@ -28,6 +29,7 @@ public class Application {
           System.out.println("Algorithme inconnu ou non spécifié");
           break;
       }
+    // s.resoudre(new Dynamique(s));
 
       long end = System.nanoTime();
       long duration = end - begin;
