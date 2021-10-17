@@ -24,6 +24,7 @@ public class ABR {
         this.profondeur = 0;
         this.prix = 0;
         this.poids = 0;
+        this.indiceObjet = -1;
     }
 
     /**

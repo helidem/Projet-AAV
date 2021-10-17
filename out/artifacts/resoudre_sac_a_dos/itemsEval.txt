@@ -33,7 +33,7 @@ Camping gaz ; 5.0 ; 14.0
 Boite alluminium ; 2.0 ; 6.0
 Tente ; 4.0 ; 13.0
 Roue ; 6.0 ; 17.0
-Trousse ; 3.0 ; 10.0
+Trousse ; 4.0 ; 10.0
 Cartes ; 1.0 ; 4.0
 Briquet ; 1.0 ; 1.0
 Maillet ; 5.0 ; 5.0
