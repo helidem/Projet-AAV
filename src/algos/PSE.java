@@ -98,7 +98,7 @@ public class PSE extends Gloutonne {
         */
 
         // cette variable correspond au prix de l'ensemble des objets dans la liste moins celui de l'objet traité en cours
-        // 
+        //
         float test = borneSup - objets.get(indexObj).getPrix();
 
             if (test >= borneMin) {
