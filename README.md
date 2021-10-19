@@ -14,7 +14,7 @@ Comment l'utiliser ?
 ```` shell
 > git clone https://github.com/madskullkoa/Projet-AAV.git
 > cd bin
-> resoudre-sac-a-dos.bat (le chemin de la liste d\'items) (le poids max du sac) (la méthode)
+> resoudre-sac-a-dos.bat (le chemin de la liste des items) (le poids max du sac) (la méthode)
 OU
 > java -jar sac-a-dos.jar
 ````
