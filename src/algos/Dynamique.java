@@ -6,11 +6,14 @@ public class Dynamique extends Algorithme{
         super(sac);
     }
 
+    /**
+     * Methode qui resous le problème avec la méthode dynamique
+     */
     @Override
     public void resoudre() {
         // créer une matrice de valeurs de taille nombre d'objets * le poids max du sac
         int nbObjets = objets.size();
-        int castedPoidsMax = (int) sac.getPoidsmax()*10;
+        int castedPoidsMax = (int) sac.getPoidsmax()*10; // On cast pour éviter les problèmes avec les floats.
         float[][] M = new float[nbObjets][castedPoidsMax+1];
 
         // remplir la premiere ligne
@@ -63,7 +66,7 @@ public class Dynamique extends Algorithme{
             while((i > 0) && (M[i ][j] == M[i-1][j])){
                 i--;
             }
-            j = j - (int)(objets.get(i).getPoids()*10);
+            j -= (int) (objets.get(i).getPoids() * 10);
             if(j>=0)
                 sac.add(objets.get(i));
             i--;

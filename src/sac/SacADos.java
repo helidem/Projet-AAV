@@ -1,9 +1,6 @@
 package sac;
 
 import algos.Algorithme;
-import algos.Dynamique;
-import algos.Gloutonne;
-import algos.PSE;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,10 +33,11 @@ public class SacADos implements Iterable<Objet>{ //iterable pour etre utilisé d
         return prix;
     }
 
-    public void setPoidsActuel(float poidsActuel) {
-        this.poidsActuel = poidsActuel;
-    }
-
+    /**
+     * Constructeur du sac a dos
+     * @param chemin le chemin du fichier des items
+     * @param poidsmax le poids max de l'objet
+     */
     public SacADos(String chemin, float poidsmax) {
         this.poidsmax = poidsmax;
         this.objetsDansSac = new ArrayList < > ();
@@ -63,41 +61,35 @@ public class SacADos implements Iterable<Objet>{ //iterable pour etre utilisé d
         }
     }
 
-    public ArrayList < Objet > getObjetsDansSac() {
-        return objetsDansSac;
-    }
-
-    public void setObjetsDansSac(ArrayList < Objet > objetsDansSac) {
-        this.objetsDansSac = objetsDansSac;
-    }
-
     public ArrayList < Objet > getObjetsPossibles() {
         return objetsPossibles;
     }
 
-    public void setObjetsPossibles(ArrayList < Objet > objetsPossibles) {
-        this.objetsPossibles = objetsPossibles;
-    }
-
+    /**
+     * Lance la résolution
+     * @param algo l'algorithme en question
+     */
     public void resoudre(Algorithme algo) {
          algo.resoudre();
     }
 
+    /**
+     * Vide le sac entièrement
+     */
     public void viderSac() {
         this.poidsActuel = 0;
         this.objetsDansSac.clear();
     }
 
+    /**
+     * Permet d'ajouter un objet dans le sac
+     * @param o l'objet en question
+     */
     public void add(Objet o) {
         if (o.getPoids() + this.poidsActuel <= this.poidsmax) {
             this.objetsDansSac.add(o);
             this.poidsActuel += o.getPoids();
         }
-    }
-
-    public void remove(Objet o){
-        this.objetsDansSac.remove(o);
-        this.poidsActuel -= o.getPoids();
     }
 
     public String toString(){

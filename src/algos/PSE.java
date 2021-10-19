@@ -16,18 +16,24 @@ public class PSE extends Gloutonne {
         super(sac);
     }
 
+    /**
+     * Methode qui résoud le problème avec la méthode dynamique
+     */
     public void resoudre() {
+        // On initialise les bornes min et max à 0
         float borneSup = borneMin = 0;
 
         for (Objet o: super.objets) {
             borneSup += o.getPrix();
         }
 
+        // on lance la methode gloutonne pour avoir un resultat de reference et une solution "réaliste" (heuristique)
         super.resoudre();
+        // mise a jour de la borneMin
         for (Objet o: sac)
             this.borneMin += o.getPrix();
 
-        // Si la methode gloutonne a réussi a trouver la solution, on ne fait pas la methode pse
+        // Si la methode gloutonne a réussi à trouver la solution, on ne fait pas la methode pse
         if (borneSup != sac.getPrixTotal()) {
 
             // On crée la racine de l'ABR
@@ -79,19 +85,20 @@ public class PSE extends Gloutonne {
             // On rappelle la fonction recursive avec l'objet suivant
             resoudreRec(indexObj + 1, node.getFilsGauche(), borneSup);
 
-      /*
-      si à partir d’un nœud, nous savons que nous ne pourrons pas faire plus de 10 (borne supérieure calculée)
-      et que la borne inférieure existante est à 11 (on a déjà une solution de valeur 11), alors les solutions
-      descendantes de ce nœud ne sont pas intéressantes.
-      */
+        /*
+        si à partir d’un nœud, nous savons que nous ne pourrons pas faire plus de 10 (borne supérieure calculée)
+        et que la borne inférieure existante est à 11 (on a déjà une solution de valeur 11), alors les solutions
+        descendantes de ce nœud ne sont pas intéressantes.
+        */
 
-      /*
-       La somme de toutes les
-       valeurs de tous les objets déjà mis dans le sac plus la somme des valeurs des objets
-       restants dont on ne sait
-       pas encore s’ils seront dans le sac.
-      */
-        // on a décidé de faire une soustraction
+        /*
+        La somme de toutes les
+        valeurs de tous les objets déjà mis dans le sac plus la somme des valeurs des objets
+        restants dont on ne sait pas encore s’ils seront dans le sac.
+        */
+
+        // cette variable correspond au prix de l'ensemble des objets dans la liste moins celui de l'objet traité en cours
+        // 
         float test = borneSup - objets.get(indexObj).getPrix();
 
             if (test >= borneMin) {

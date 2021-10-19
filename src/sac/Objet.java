@@ -9,6 +9,12 @@ public class Objet{
     private boolean dansSac;
     private float ratio;
 
+    /**
+     * Constructeur d'objet
+     * @param nom Le nom de l'objet
+     * @param poids Le poids de l'objet
+     * @param prix Le prix de l'objet
+     */
     public Objet(String nom, float poids, float prix) {
         this.nom = nom;
         this.poids = poids;
@@ -17,44 +23,16 @@ public class Objet{
         this.ratio = prix/poids;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     public float getPoids() {
         return poids;
-    }
-
-    public void setPoids(float poids) {
-        this.poids = poids;
     }
 
     public float getPrix() {
         return prix;
     }
 
-    public void setPrix(float prix) {
-        this.prix = prix;
-    }
-
-    public boolean isDansSac() {
-        return dansSac;
-    }
-
-    public void setDansSac(boolean dansSac) {
-        this.dansSac = dansSac;
-    }
-
     public float getRatio() {
         return ratio;
-    }
-
-    public void setRatio(float ratio) {
-        this.ratio = ratio;
     }
 
     @Override

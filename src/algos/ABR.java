@@ -14,6 +14,7 @@ public class ABR {
     private int profondeur;
     private float prix;
     private float poids;
+    // Indice de l'objet dans la liste d'objets totaux
     private int indiceObjet;
 
     /**
