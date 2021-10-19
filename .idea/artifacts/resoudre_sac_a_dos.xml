@@ -2,7 +2,7 @@
   <artifact type="jar" name="resoudre-sac-a-dos">
     <output-path>$PROJECT_DIR$/out/artifacts/resoudre_sac_a_dos</output-path>
     <root id="archive" name="untitled104.jar">
-      <element id="module-output" name="untitled104" />
+      <element id="module-output" name="Projet" />
     </root>
   </artifact>
 </component>
